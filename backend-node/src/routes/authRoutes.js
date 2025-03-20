@@ -4,6 +4,17 @@ const authMiddleware = require("../middleware/middleware");
 
 const router = express.Router();
 
+router.get("/check-db", (req, res) => {
+    db.get("SELECT count(*) as count FROM sqlite_master WHERE type='table' AND name='users'", (err, row) => {
+        if (err) {
+            res.status(500).json({ message: "Error al verificar la base de datos", error: err.message });
+        } else if (row.count > 0) {
+            res.status(200).json({ message: "La base de datos y la tabla 'users' están creadas correctamente." });
+        } else {
+            res.status(500).json({ message: "La base de datos o la tabla 'users' no se han creado." });
+        }
+    });
+});
 router.post("/register", authController.register);
 
 router.post("/login", authController.login);
