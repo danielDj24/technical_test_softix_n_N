@@ -1,0 +1,13 @@
+.homeContainer {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.formsContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    flex-direction: column;
+}
