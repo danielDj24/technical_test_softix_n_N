@@ -1,21 +1,9 @@
-const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
 
-// Asegúrate de que la ruta sea absoluta
-const dbPath = path.join(__dirname, "../../database/technical_test.sqlite");
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) console.error("Error al conectar SQLite:", err);
-    else console.log("📦 Base de datos SQLite conectada");
-});
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Crear tabla de usuarios si no existe
-db.run(
-    `CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        password TEXT
-    )`
-);
-
-module.exports = db;
+module.exports = supabase; 
